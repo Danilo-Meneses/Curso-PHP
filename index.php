@@ -10,10 +10,21 @@ echo json_encode($usuarios);
 
 var_dump("$usuarios");*/
 
-$root = new Usuario();
+//carrega um usuário
+/*$root = new Usuario();
+$root->loadById(3);*/
 
-$root->loadById(3);
+// Carrega uma lista de usuários
+//$lista = Usuario::getList();
 
-echo $root;
+// Carrega uma lista de usuários buscando pelo login
+
+//$search = Usuario::search("jo");
+
+$usuario = new Usuario();
+
+$usuario->login("root", "!@#$");
+
+echo $usuario;
 
 ?>
