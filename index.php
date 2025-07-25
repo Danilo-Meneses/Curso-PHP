@@ -2,7 +2,7 @@
 
 require_once("config.php");
 
-echo '<h4 strong align=center>Exemplo de getList</h4>';
+/*echo '<h4 strong align=center>Exemplo de getList</h4>';
 
 $lista = Usuario::getList();
 
@@ -45,7 +45,20 @@ $user->loadById(8);
 
 $user->update('professor','!@#$%¨&*');
 
-echo $user;
+echo $user;*/
+
+echo '============================================================================<br>';
+echo '<h4 strong align=center>Exemplo de DELETE</h4>';
+
+
+
+$deleters = new Usuario();
+
+$deleters->loadById(15);
+
+$deleters->delete();
+
+echo $deleters;
 
 
 ?>
