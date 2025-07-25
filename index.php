@@ -2,29 +2,50 @@
 
 require_once("config.php");
 
-/*$sql = new Sql();
+echo '<h4 strong align=center>Exemplo de getList</h4>';
 
-$usuarios = $sql->select("SELECT * FROM tb_usuarios");
+$lista = Usuario::getList();
 
-echo json_encode($usuarios);
+echo json_encode($lista);
 
-var_dump("$usuarios");*/
+echo '<br>';
 
-//carrega um usuário
-/*$root = new Usuario();
-$root->loadById(3);*/
+echo '============================================================================<br>';
+echo '<h4 strong align=center>Exemplo de search</h4>';
 
-// Carrega uma lista de usuários
-//$lista = Usuario::getList();
+$usuario = Usuario::search('root');
+echo json_encode($usuario).'<br>';
 
-// Carrega uma lista de usuários buscando pelo login
 
-//$search = Usuario::search("jo");
+echo '============================================================================<br>';
+echo '<h4 strong align=center>Exemplo de login</h4>';
 
-$usuario = new Usuario();
+$login = new Usuario;
+$login->login('joao', '123654');
 
-$usuario->login("root", "!@#$");
+echo ($login);
 
-echo $usuario;
+echo '============================================================================<br>';
+echo '<h4 strong align=center>Exemplo de INSERT</h4>';
+
+$aluno = new Usuario();
+
+$aluno->setDeslogin("aluno");
+$aluno->setDessenha("@alun0");
+
+$aluno->insert();
+echo $aluno;
+
+echo '============================================================================<br>';
+echo '<h4 strong align=center>Exemplo de UPDATE</h4>';
+
+$user = new Usuario();
+
+$user->loadById(8);
+
+$user->update('professor','!@#$%¨&*');
+
+echo $user;
+
 
 ?>

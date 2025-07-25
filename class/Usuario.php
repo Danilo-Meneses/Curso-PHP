@@ -48,12 +48,7 @@ class Usuario {
         ));
 
         if (count($result)>0){
-            $row = $result[0];
-
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime ($row['dtcadastro']));
+            $this->setData($result[0]);
         }
 
     }
@@ -74,8 +69,8 @@ class Usuario {
 
         return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin", array(
             ':SEARCH'=>"%".$login."%"
-
         ));
+
     }
 
     public function login($login, $password){
@@ -88,17 +83,49 @@ class Usuario {
         ));
 
         if (count($result)>0){
-            $row = $result[0];
-
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime ($row['dtcadastro']));
+            $this->setData($result[0]);
         } else {
 
             throw new Exception("Login e/ou senha inválidos!");    
 
         }
+
+    }
+
+    public function setData($data){
+        $this->setIdusuario($data['idusuario']);
+        $this->setDeslogin($data['deslogin']);
+        $this->setDessenha($data['dessenha']);
+        $this->setDtcadastro(new DateTime ($data['dtcadastro']));
+    }
+
+    public function Insert(){
+
+        $sql = new Sql();
+
+        $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+            ':LOGIN'=>$this->getDeslogin(),
+            ':PASSWORD'=>$this->getDessenha()
+        ));
+
+        if (count($results) > 0){
+            $this->setData($results[0]);
+        }
+        
+    }
+
+    public function update($login, $senha){
+        $sql = new Sql();
+
+        $login = $this->setDeslogin($login);
+        $senha = $this->setDessenha($senha);
+        
+        //mais uma vez foi necessário substituir query por run
+        $sql->run("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID", array(
+            ':LOGIN'=>$this->getDeslogin(),
+            ':PASSWORD'=>$this->getDessenha(),
+            ':ID'=>$this->getIdUsuario()
+        ));
 
     }
 

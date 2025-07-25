@@ -2,7 +2,7 @@
 
 class Sql extends PDO {
 
-    private $conn;
+    public $conn;
 
     public function __construct(){
 
@@ -44,7 +44,6 @@ class Sql extends PDO {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
-
-
-
 }
+
+?>
